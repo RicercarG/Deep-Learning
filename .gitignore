@@ -1,4 +1,7 @@
-.DS_Store
+
+**/.DS_Store
+
+Week6/HW3/data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

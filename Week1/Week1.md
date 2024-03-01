@@ -1,2 +1,5 @@
+# Lecture
 * Slides: [[01L - Spiral classification (I).pdf]]
-* Homework1: [[hw1.pdf]]
+# Homework:
+* [[hw1.pdf]]
+* Solutions: [[Deep_Learning__2024_Spring__Homework_1_Sol.pdf]]

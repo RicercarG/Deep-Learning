@@ -13,3 +13,4 @@
 ![[2024.1Spring/Deep Learning/Week3/Week3]]
 ![[2024.1Spring/Deep Learning/Week4/Week4]]
 ![[2024.1Spring/Deep Learning/Week5/Week5]]
+![[2024.1Spring/Deep Learning/Week6/Week6]]
