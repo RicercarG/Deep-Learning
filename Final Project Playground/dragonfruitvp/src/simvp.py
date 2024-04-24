@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from .base_method import Base_method
+from dragonfruitvp.src.base_method import Base_method
 from dragonfruitvp.modules import (ConvSC, ConvNeXtSubBlock, ConvMixerSubBlock, GASubBlock, gInception_ST,
                                    HorNetSubBlock, MLPMixerSubBlock, MogaSubBlock, PoolFormerSubBlock,
                                    SwinSubBlock, UniformerSubBlock, VANSubBlock, ViTSubBlock, TAUSubBlock)
@@ -39,7 +39,10 @@ class SimVP(Base_method):
         return pred_y
     
     def training_step(self, batch, batch_idx):
-        batch_x, batch_y = batch
+        if len(batch) == 3:
+            batch_x, batchy, _ = batch
+        else:
+            batch_x, batch_y = batch
         pred_y = self(batch_x)
         loss = self.criterion(pred_y, batch_y)
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)

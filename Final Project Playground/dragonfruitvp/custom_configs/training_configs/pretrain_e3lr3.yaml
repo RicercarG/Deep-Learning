@@ -11,5 +11,6 @@ metrics:
   - 'ssim'
 dataname: 'custom'
 in_shape: [11, 3, 160, 240]
+res_dir: 'weights_hub'
 
 

@@ -62,3 +62,14 @@ def output_namespace(namespace):
     for k, v in configs.items():
         message += '\n' + k + ': \t' + str(v) + '\t'
     return message
+
+
+def load_model_weights(model, weight_path, is_ckpt, fix=True):
+    statedict = torch.load(weight_path)
+    if is_ckpt:
+        statedict = statedict['state_dict']
+    model.load_state_dict(statedict)
+    if fix:
+        for param in model.parameters():
+            param.requires_grad = False
+    return model

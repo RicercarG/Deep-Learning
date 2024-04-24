@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import torch
+import torchmetrics
 
 import lpips
 from skimage.metrics import structural_similarity as cal_ssim
@@ -271,6 +272,13 @@ def metric(pred, true, mean=None, std=None, metrics=['mae', 'mse'],
             for f in range(pred.shape[1]):
                 lpips += cal_lpips(pred[b, f], true[b, f])
         eval_res['lpips'] = lpips / (pred.shape[0] * pred.shape[1])
+
+    if 'iou' in metrics:
+        print(pred.shape)
+        print(true.shape)
+        jaccard = torchmetrics.JaccardIndex(task="multiclass", num_classes=49)
+
+        # TODO
 
     if return_log:
         for k, v in eval_res.items():

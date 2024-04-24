@@ -11,7 +11,7 @@ def create_parser():
                         help='Name of device to use for tensor computations (cuda/cpu)')
     parser.add_argument('--dist', action='store_true', default=False,
                         help='Whether to use distributed training (DDP)')
-    parser.add_argument('--res_dir', default='work_dirs', type=str)
+    parser.add_argument('--res_dir', default='weights_hub', type=str)
     parser.add_argument('--ex_name', '-ex', default='Debug', type=str)
     parser.add_argument('--fp16', action='store_true', default=False,
                         help='Whether to use Native AMP for mixed precision training (PyTorch=>1.6.0)')
@@ -118,7 +118,7 @@ def default_parser():
         # Set-up parameters
         'device': 'cuda',
         'dist': False,
-        'res_dir': 'checkpoint_output',
+        'res_dir': 'weights_hub',
         'ex_name': 'Debug',
         'fp16': False,
         'torchscript': False,

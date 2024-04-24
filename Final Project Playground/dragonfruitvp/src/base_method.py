@@ -1,9 +1,10 @@
-import logging
-import numpy as np
-import torch.nn as nn
 import os
 import os.path as osp
+import logging
+
+import numpy as np
 import pytorch_lightning as pl
+import torch.nn as nn
 
 from dragonfruitvp.utils.optim_scheduler import get_optim_scheduler
 from dragonfruitvp.utils.metrics import metric
@@ -46,7 +47,10 @@ class Base_method(pl.LightningModule):
         NotImplementedError
     
     def validation_step(self, batch, batch_idx):
-        batch_x, batch_y = batch
+        if len(batch) == 3:
+            batch_x, _, batch_y = batch
+        else:
+            batch_x, batch_y = batch
         pred_y = self(batch_x, batch_y)
         loss = self.criterion(pred_y, batch_y)
         eval_res, eval_log = metric(
@@ -71,6 +75,10 @@ class Base_method(pl.LightningModule):
         return loss
     
     def test_step(self, batch, batch_idx):
+        if len(batch) == 3:
+            batch_x, _, batch_y = batch
+        else:
+            batch_x, batch_y = batch
         batch_x, batch_y = batch
         pred_y = self(batch_x, batch_y)
         outputs = {'inputs': batch_x.cpu().numpy(), 'preds': pred_y.cpu().numpy(), 'trues': batch_y.cpu().numpy()}

@@ -1,42 +1,23 @@
+import os.path as osp
 import sys
 import time
-import os.path as osp
-
 
 import argparse
-import torch
-
+import pytorch_lightning as pl
 import pytorch_lightning.callbacks as plc
+import torch
 
 from fvcore.nn import FlopCountAnalysis, flop_count_table
 from pytorch_lightning import seed_everything, Trainer
-from .simvp import SimVP
+
+from dragonfruitvp.dataset.base_module import BaseDataModule
+from dragonfruitvp.src.simvp import SimVP
 from dragonfruitvp.utils.callbacks import (SetupCallback, EpochEndCallback, BestCheckpointCallback)
 
-import pytorch_lightning as pl
 
 
-class BaseDataModule(pl.LightningDataModule):
-    def __init__(self, train_loader, valid_loader, test_loader):
-        super().__init__()
-        self.train_loader = train_loader
-        self.valid_loader = valid_loader
-        self.test_loader = test_loader
-        self.test_mean = test_loader.dataset.mean
-        self.test_std = test_loader.dataset.std
-        self.data_name = test_loader.dataset.data_name
 
-    def train_dataloader(self):
-        return self.train_loader
-
-    def val_dataloader(self):
-        return self.valid_loader
-
-    def test_dataloader(self):
-        return self.test_loader
-
-
-class DragonFruitExperiment:
+class DragonFruitPretrain:
     def __init__(self, args, dataloaders=None, strategy='auto'):
         self.args = args
         self.config = self.args.__dict__
@@ -55,7 +36,8 @@ class DragonFruitExperiment:
             steps_per_epoch=len(self.data.train_loader),
             test_mean = self.data.test_mean,
             test_std = self.data.test_std,
-            save_dir = save_dir, **self.config
+            save_dir = save_dir, 
+            **self.config,
         )
 
         callbacks, self.save_dir = self._load_callbacks(args, save_dir, ckpt_dir)
